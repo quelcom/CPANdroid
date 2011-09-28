@@ -3,10 +3,13 @@ package com.github.quelcom.net;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.util.Log;
 
@@ -29,6 +32,13 @@ public class Get extends Request {
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
+
+            JSONObject json = new JSONObject(response);
+            json = new JSONObject(json.optString("hits"));
+            JSONArray jsonA = json.optJSONArray("hits");
+            Log.e(TAG, jsonA.toString());
+            JSONObject first = new JSONObject(jsonA.get(0).toString());
+            return first.optJSONObject("fields").toString();
 
         } catch (Exception e) {
             e.printStackTrace();

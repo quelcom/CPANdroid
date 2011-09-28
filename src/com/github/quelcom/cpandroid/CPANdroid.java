@@ -26,8 +26,8 @@ public class CPANdroid extends Activity {
         text = (TextView) findViewById(R.id.text);
         dialog = ProgressDialog.show(CPANdroid.this, "", "Searching...");
         RequesterTask task = new RequesterTask();
-        //task.execute("/author/_search?q=QUEL*&fields=name&size=100");
-        task.execute("/author/QUELCOM");
+        task.execute("/author/_search?q=QUELC*&fields=name&size=100");
+        //task.execute("/author/QUELCOM");
     }
 
     public class RequesterTask extends AsyncTask<String, Void, String> {
