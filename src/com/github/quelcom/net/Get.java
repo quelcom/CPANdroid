@@ -32,14 +32,6 @@ public class Get extends Request {
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
-
-            JSONObject json = new JSONObject(response);
-            json = new JSONObject(json.optString("hits"));
-            JSONArray jsonA = json.optJSONArray("hits");
-            Log.e(TAG, jsonA.toString());
-            JSONObject first = new JSONObject(jsonA.get(0).toString());
-            return first.optJSONObject("fields").toString();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
