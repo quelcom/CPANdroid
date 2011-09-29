@@ -1,6 +1,5 @@
 package com.github.quelcom.model.json;
 
-
 public class AuthorSearch {
     private String name;
     private String dir;
