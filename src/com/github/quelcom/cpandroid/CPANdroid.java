@@ -2,10 +2,6 @@ package com.github.quelcom.cpandroid;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.quelcom.adapters.AuthorAdapter;
 import com.github.quelcom.model.json.AuthorSearch;
+import com.github.quelcom.model.json.ResponseParser;
 import com.github.quelcom.net.Get;
 import com.google.gson.Gson;
 
@@ -66,46 +63,16 @@ public class CPANdroid extends ListActivity {
         protected void onPostExecute(String result) {
             CPANdroid.dialog.dismiss();
 
-            if ( validateData(result) ) {
+            if ( ResponseParser.validateData(result) ) {
                 Log.d(TAG, result);
                 ArrayList<AuthorSearch> allAuths = new ArrayList<AuthorSearch>();
-                allAuths = prepareData(result);
+                allAuths = ResponseParser.prepareData(result);
                 AuthorAdapter aa = new AuthorAdapter(CPANdroid.this, allAuths);
                 text.setText("");
                 setListAdapter(aa);
-
             } else {
                 text.setText("validate data has failed");
             }
         }
-    }
-    
-    private Boolean validateData(String result) {
-        return true;
-    }
-
-    private ArrayList<AuthorSearch> prepareData(String result) {
-        JSONObject json;
-        try {
-            gson = new Gson();
-            ArrayList<AuthorSearch> authorArray = new ArrayList<AuthorSearch>();
-            json = new JSONObject(result);
-            json = new JSONObject(json.optString("hits"));
-            JSONArray jsonA = json.optJSONArray("hits");
-            Log.v(TAG, jsonA.toString());
-            JSONArray nou = new JSONArray();
-            int nouLength = jsonA.length();
-            for ( int i = 0; i < nouLength; i++) {
-                AuthorSearch myAuth = new AuthorSearch();
-                JSONObject part =  new JSONObject(jsonA.get(i).toString());
-                nou.put(part.optJSONObject("_source").toString());
-                myAuth = gson.fromJson(part.optJSONObject("_source").toString(), AuthorSearch.class);
-                authorArray.add(myAuth);
-            }
-            return authorArray;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
