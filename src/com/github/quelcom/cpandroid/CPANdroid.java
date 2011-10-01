@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.quelcom.adapters.AuthorAdapter;
@@ -74,5 +75,11 @@ public class CPANdroid extends ListActivity {
                 text.setText("validate data has failed");
             }
         }
+    }
+
+    protected void onListItemClick( ListView l, View v, int position, long id ) {
+        AuthorSearch myAuth = new AuthorSearch();
+        myAuth = (AuthorSearch) l.getItemAtPosition(position);
+        Log.e(TAG, "hello " + myAuth.getName());
     }
 }
