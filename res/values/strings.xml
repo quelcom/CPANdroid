@@ -2,4 +2,10 @@
 <resources>
     <string name="hello">Hello World, CPANdroid!</string>
     <string name="app_name">CPANdroid</string>
+
+     <string-array
+        name="features">
+        <item>author</item>
+        <item>release</item>
+    </string-array>
 </resources>
